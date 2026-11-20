@@ -1,15 +1,15 @@
 # hello-world
 
-Node.js + MySQL backend test service for **BayonOS Cloud** (`*.bayonos.site`).
+Node.js + MySQL + JWT Auth backend for **BayonOS Cloud** (`*.bayonos.site`).
 
 ## Endpoints
-- `GET /` — Service info JSON
-- `GET /health` — Health check (`200 OK`)
-- `GET /api/hello` — Hello World JSON response
-- `GET /api/db-test` — Verify MySQL connection (`VERSION()`, `DATABASE()`, `NOW()`)
-- `GET /api/users` — Auto-creates `users` table if needed and returns `SELECT * FROM users`
-- `POST /api/users` — Insert a user (`{ "full_name": "Raksmey", "email": "raksmey@bayonos.site" }`)
+- `GET /` — API overview
+- `GET /health` — Health check
+- `GET /api/db-test` — Verify MySQL connection
+- `POST /api/auth/register` — Register with `{ "username", "password", "full_name" }` → returns JWT `token` & `user`
+- `POST /api/auth/login` — Login with `{ "username", "password" }` → returns JWT `token`, `full_name`, & `user`
+- `GET /api/auth/me` — Send `Authorization: Bearer <token>` → returns `full_name` & `user`
+- `GET /api/users` — List registered users (without password hashes)
 
 ## Environment Variables
-Copy `.env.example` to `.env` for local development (`.env` is gitignored).
-On **BayonOS Cloud**, attach your Managed Database (`Attach Env`) and click **Rebuild**.
+Set `JWT_SECRET` + your database variables (`DATABASE_URL` or `DB_*`) in BayonOS Environment Variables (or local `.env`, which is gitignored).
